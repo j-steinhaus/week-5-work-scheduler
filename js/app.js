@@ -1,7 +1,8 @@
 // time & Date
-var currentDate =
-  moment().format("dddd") + " " + moment().format("Do MMM YYYY");
-var currentHour = moment().format("h:mm:ss a");
+let today = moment();
+$("#currentDay").text(today.format("MMM Do, YYYY"));
+let currentTime = moment();
+$("#timeNow").text(currentTime.format("HH[00]"));
 
 // text hour
 var fivePm = $("#17pm");
@@ -15,22 +16,7 @@ var tenAm = $("#10am");
 var nineAm = $("#9am");
 var eightAm = $("#8am");
 
-var hour = moment().hours();
-var userInput;
-var hourSpan;
-
-// date & hour
-var interval = setInterval(function () {
-  var momentNow = moment();
-  $("currentDay").html(
-    momentNow.format("YYYY MMMM DD") +
-      " " +
-      momentNow.format("dddd").substring(0, 3).toUpperCase()
-  );
-
-  $("currentDay").html(currentDate + " " + momentNow.format("hh:mm:ss a"));
-}, 100);
-
+// timeblock functions
 function initPage() {
   console.log("Current Hour " + hour);
   var init8 = JSON.parse(localStorage.getItem("08:00 am"));
@@ -43,7 +29,7 @@ function initPage() {
   tenAm.val(init10);
 
   var init11 = JSON.parse(localStorage.getItem("11:00 pm"));
-  elevemPm.val(init11);
+  elevenAm.val(init11);
 
   var init12 = JSON.parse(localStorage.getItem("12:00 pm"));
   twelvePm.val(init12);
@@ -52,10 +38,10 @@ function initPage() {
   onePm.val(init1);
 
   var init2 = JSON.parse(localStorage.getItem("02:00 pm"));
-  twoPm.val(init3);
+  twoPm.val(init2);
 
   var init3 = JSON.parse(localStorage.getItem("03:00 pm"));
-  threePm.val(init4);
+  threePm.val(init3);
 
   var init4 = JSON.parse(localStorage.getItem("04:00 pm"));
   fourPm.val(init4);
@@ -63,6 +49,19 @@ function initPage() {
   var init5 = JSON.parse(localStorage.getItem("05:00 pm"));
   fivePm.val(init5);
 }
+
+$("init8").val(localStorage.getItem("08:00 am"));
+$("init9").val(localStorage.getItem("09:00 am"));
+$("init10").val(localStorage.getItem("10:00 am"));
+$("init11").val(localStorage.getItem("11:00 am"));
+$("init12").val(localStorage.getItem("12:00 pm"));
+$("init1").val(localStorage.getItem("1:00 pm"));
+$("init2").val(localStorage.getItem("2:00 pm"));
+$("init3").val(localStorage.getItem("3:00 pm"));
+$("init4").val(localStorage.getItem("4:00 pm"));
+$("init5").val(localStorage.getItem("5:00 pm"));
+
+// timeblock color to indiciate past, present or future
 
 function background() {
   $(".form-control").each(function () {
@@ -82,6 +81,11 @@ function background() {
 }
 
 $(document).ready(function () {
+  colorHours();
+  reloadPage();
+});
+
+$(document).ready(function () {
   initPage();
   background();
 
@@ -94,8 +98,8 @@ $(document).ready(function () {
     localStorage.setItem(hourSpan, JSON.stringify(userInput));
   });
   // Button for clear the day
-  $("#clearDay").on("click", function () {
+  $(".clearDay").on("click", function () {
     localStorage.clear();
-    initPage();
+    location.reload();
   });
 });

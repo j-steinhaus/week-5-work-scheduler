@@ -65,6 +65,7 @@ white-space: pre-wrap;
   color: white;
 }
 
+/* hover effects  */
 .saveBtn:hover {
   font-size: 15px;
   transition: color .3s ease-in-out, box-shadow .3s ease-in-out;
